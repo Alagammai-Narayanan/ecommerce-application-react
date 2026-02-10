@@ -104,14 +104,16 @@ const CartPage = () => {
       >
         Add More products
       </button>
-      <div className="my-4 text-center">
-        <button
-          onClick={handleCheckout}
-          className="ms-3 text-center bg-blue-600 p-2 rounded-[5px] cursor-pointer mx-auto my-4"
-        >
-          Proceed to Checkout
-        </button>
-      </div>
+      {cartItems.length !== 0 && (
+        <div className="my-4 text-center">
+          <button
+            onClick={handleCheckout}
+            className="ms-3 text-center bg-blue-600 p-2 rounded-[5px] cursor-pointer mx-auto my-4"
+          >
+            Proceed to Checkout
+          </button>
+        </div>
+      )}
 
       {cartItems.length === 0 && (
         <div className="text-center">
