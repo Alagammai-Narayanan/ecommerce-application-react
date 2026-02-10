@@ -3,12 +3,13 @@ import { useQuery } from "@tanstack/react-query"
 import { useEffect, useMemo, useState } from "react"
 import { fetchProducts } from "../../api/productsApi"
 import { useWishlist } from "../../context/wishlistContext"
+import type { ProductType } from "../../types/productType"
 import CartHeader from "./CartHeader"
 import ProductCard from "./ProductCard"
 
 const ProductPage = () => {
   // const { data, isLoading } = useProducts()
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<ProductType[]>({
     queryKey: ["products"],
     queryFn: fetchProducts,
   })
@@ -47,7 +48,7 @@ const ProductPage = () => {
   if (isLoading) return <p>Loading...</p>
   if (error) return <p>Error loading products</p>
 
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
 
@@ -59,7 +60,7 @@ const ProductPage = () => {
 
   //setSuggestions
   const suggestions =
-    data.filter((item) =>
+    data?.filter((item) =>
       item.title.toLowerCase().includes(search.toLowerCase()),
     ) ?? []
 

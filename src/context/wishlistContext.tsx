@@ -9,8 +9,8 @@ import type { ProductType } from "../types/productType"
 
 interface WishlistType {
   handleWishlist: (product: ProductType) => void
-  wishlist?: ProductType[]
-  setWishlist: Dispatch<any>
+  wishlist: ProductType[]
+  setWishlist: Dispatch<React.SetStateAction<ProductType[]>>
 }
 
 export const WishlistContext = createContext<WishlistType | undefined>(
@@ -22,7 +22,7 @@ export const WishlistProvider = ({
 }: {
   children: React.ReactNode
 }) => {
-  const [wishlist, setWishlist] = useState(() => {
+  const [wishlist, setWishlist] = useState<ProductType[]>(() => {
     const stored = localStorage.getItem("wishlistkey")
     return stored ? JSON.parse(stored) : []
   })
@@ -33,9 +33,9 @@ export const WishlistProvider = ({
   }, [wishlist])
 
   const handleWishlist = (product: ProductType) => {
-    setWishlist((prev) =>
-      prev.some((item) => item.id === product.id)
-        ? prev.filter((item) => item.id !== product.id)
+    setWishlist((prev: ProductType[]) =>
+      prev.some((item: ProductType) => item.id === product.id)
+        ? prev.filter((item: ProductType) => item.id !== product.id)
         : [...prev, product],
     )
   }
@@ -50,4 +50,8 @@ export const WishlistProvider = ({
   )
 }
 
-export const useWishlist = () => useContext(WishlistContext)
+export const useWishlist = () => {
+  const ctx = useContext(WishlistContext)
+  if (!ctx) throw new Error("useWishist should inside whishlist context")
+  return ctx
+}

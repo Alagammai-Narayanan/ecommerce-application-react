@@ -3,6 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { useToast } from "../../context/ToastContext"
 import useProducts from "../../hooks/useProducts"
 import { addToCart } from "../../store/cartSlice"
+import type { RootState } from "../../store/store"
 import type { ProductType } from "../../types/productType"
 import CartHeader from "./CartHeader"
 
@@ -14,7 +15,7 @@ const ProductDetail = () => {
 
   const navigate = useNavigate()
 
-  const cartItems = useSelector((state) => state.cart)
+  const cartItems = useSelector((state: RootState) => state.cart)
 
   const { showToast } = useToast()
 

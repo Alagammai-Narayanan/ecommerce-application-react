@@ -19,8 +19,6 @@ import { CartProvider } from "./context/CartContext"
 import { ThemeProvider } from "./context/ThemeContext"
 import { ToastProvider } from "./context/ToastContext"
 import { WishlistProvider } from "./context/wishlistContext"
-import FileExplorer from "./features/files/FileExplorer"
-import CartPage from "./features/products/CartPage"
 import CheckoutPage from "./features/products/CheckoutPage"
 import ProductPage from "./features/products/ProductPage"
 import Wishlist from "./features/products/Wishlist"
@@ -28,6 +26,7 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 
 const ProductDetail = lazy(() => import("./features/products/ProductDetail"))
+const CartPage = lazy(() => import("./features/products/CartPage"))
 
 const App = () => {
   const [profile] = useState(() => {
@@ -123,7 +122,7 @@ const App = () => {
                     element={<ProductDetail />}
                   />
                   <Route path="*" element={<NotFound />} />
-                  <Route path="/file-explorer" element={<FileExplorer />} />
+                  {/* <Route path="/file-explorer" element={<FileExplorer />} /> */}
                   <Route path="/checkout-page" element={<CheckoutPage />} />
                   <Route path="/wishlist" element={<Wishlist />} />
                   <Route path="/edit-profile" element={<EditProfile />} />

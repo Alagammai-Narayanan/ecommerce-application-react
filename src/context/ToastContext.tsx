@@ -1,12 +1,24 @@
 import { createContext, useContext, useState } from "react"
 import ReactDOM from "react-dom"
 
-export const ToastContext = createContext(undefined)
+interface Toast {
+  id: number
+  msg: string
+  color: string
+}
+interface ToastContextType {
+  toast: Toast[]
+  showToast: (msg: string, color?: string) => void
+}
+
+export const ToastContext = createContext<ToastContextType | undefined>(
+  undefined,
+)
 
 export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
-  const [toast, setToast] = useState([])
+  const [toast, setToast] = useState<Toast[]>([])
 
-  const showToast = (msg, color = "green") => {
+  const showToast = (msg: string, color: string = "green") => {
     const id = Date.now()
     setToast((prev) => [...prev, { id, msg, color }])
     setTimeout(() => {
@@ -14,7 +26,7 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
     }, 3000)
   }
 
-  const handleClose = (id) => {
+  const handleClose = (id: number) => {
     console.log("id is:", id)
     setToast((prev) => prev.filter((item) => item.id !== id))
   }
@@ -27,7 +39,15 @@ export const ToastProvider = ({ children }: { children: React.ReactNode }) => {
   )
 }
 
-function ToastContainer({ toast, handleClose }) {
+function ToastContainer({
+  toast,
+  handleClose,
+}: {
+  toast: Toast[]
+  handleClose: (id: number) => void
+}) {
+  const container = document.querySelector(".toast-container")
+  if (!container) return null
   return ReactDOM.createPortal(
     <div className="fixed top-5 left-0 right-0 text-center">
       {toast.map((t) => (
@@ -51,8 +71,12 @@ function ToastContainer({ toast, handleClose }) {
         </span>
       ))}
     </div>,
-    document.querySelector(".toast-container"),
+    container,
   )
 }
 
-export const useToast = () => useContext(ToastContext)
+export const useToast = () => {
+  const ctx = useContext(ToastContext)
+  if (!ctx) throw new Error("useToast must be inside ToastProvider")
+  return ctx
+}

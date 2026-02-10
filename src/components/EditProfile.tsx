@@ -1,22 +1,27 @@
 import { useState } from "react"
 import { useToast } from "../context/ToastContext"
 
+interface FormDataType {
+  email: string
+  password: string
+}
+
 const EditProfile = () => {
-  const [formData, setFormData] = useState(() => {
+  const [formData, setFormData] = useState<FormDataType>(() => {
     const stored = localStorage.getItem("user")
     return stored ? JSON.parse(stored) : {}
   })
 
   const { showToast } = useToast()
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log("formData is:", formData)
     localStorage.setItem("user", JSON.stringify(formData))
     showToast("Profile updated successfully", "blue")
   }
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({
       ...prev,

@@ -14,7 +14,7 @@ const ProductCard = ({ prod, handleWishlist }: ProductCardProps) => {
 
   const { wishlist } = useWishlist()
 
-  const handleProductDetail = (id) => {
+  const handleProductDetail = (id: number) => {
     navigate(`/ProductDetail/${id}`)
   }
 

@@ -7,17 +7,18 @@ import {
   removeFromCart,
   updateCartQty,
 } from "../../store/cartSlice"
-import type { ProductType } from "../../types/productType"
+import type { RootState } from "../../store/store"
+import type { cartItem } from "../../types/productType"
 
 const CartPage = () => {
-  const cartItems = useSelector((state) => state.cart)
+  const cartItems = useSelector((state: RootState) => state.cart)
   console.log("cartItems is;", cartItems)
   const navigate = useNavigate()
   const [totalPrice, setTotalPrice] = useState(0)
 
   const dispatch = useDispatch()
 
-  const handleRemove = (id) => {
+  const handleRemove = (id: number) => {
     dispatch(removeFromCart(id))
   }
 
@@ -40,7 +41,7 @@ const CartPage = () => {
       <h1 className="font-semibold text-lg underline my-4 text-center">
         Cart Items
       </h1>
-      {cartItems.map((item: ProductType, index: string | number) => (
+      {cartItems.map((item: cartItem, index: string | number) => (
         <div className="flex gap-4" key={`${item.id}-${index}`}>
           <div>
             <img src={item.image} alt={item.title} width={100} height={100} />

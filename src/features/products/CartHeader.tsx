@@ -1,9 +1,14 @@
 import { useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { useTheme } from "../../context/ThemeContext"
+import type { RootState } from "../../store/store"
 
-const CartHeader = ({ handleSelect }) => {
-  const cartItems = useSelector((state) => state.cart)
+interface CartHeaderProps {
+  handleSelect?: (e: React.ChangeEvent<HTMLSelectElement>) => void
+}
+
+const CartHeader = ({ handleSelect }: CartHeaderProps) => {
+  const cartItems = useSelector((state: RootState) => state.cart)
 
   const navigate = useNavigate()
 

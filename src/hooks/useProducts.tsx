@@ -3,7 +3,7 @@ import type { ProductType } from "../types/productType"
 
 const useProducts = () => {
   const [data, setData] = useState<ProductType[]>([])
-  const [error, setError] = useState("")
+  const [error, setError] = useState<string>("")
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -12,8 +12,10 @@ const useProducts = () => {
         const response = await fetch("https://fakestoreapi.com/products")
         const result = await response.json()
         setData(result)
-      } catch (err) {
-        setError(err)
+      } catch (error) {
+        setError(
+          error instanceof Error ? error.message : "Something went wrong",
+        )
       } finally {
         setIsLoading(false)
       }
