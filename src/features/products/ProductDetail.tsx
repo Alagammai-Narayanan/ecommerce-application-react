@@ -1,4 +1,3 @@
-import ReactImageMagnify from "react-image-magnify"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import { useToast } from "../../context/ToastContext"
@@ -46,7 +45,8 @@ const ProductDetail = () => {
       <h3>{product.title}</h3>
       <h3>{product.price}</h3>
       <div style={{ width: 300 }}>
-        <ReactImageMagnify
+        <img src={product.image} alt={product.title} />
+        {/* <ReactImageMagnify
           smallImage={{
             alt: product.title,
             isFluidWidth: true,
@@ -57,7 +57,7 @@ const ProductDetail = () => {
             width: 1200,
             height: 1800,
           }}
-        />
+        /> */}
       </div>
       <button
         onClick={() => handleCart(product)}
